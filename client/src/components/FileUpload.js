@@ -25,7 +25,7 @@ const FileUpload = ({ onFileUpload }) => {
 
         try {
             // Upload file with progress tracking
-            const uploadResponse = await axios.post('http://localhost:3001/api/extract-text', formData, {
+            const uploadResponse = await axios.post('/api/extract-text', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
