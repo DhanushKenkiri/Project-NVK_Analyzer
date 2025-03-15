@@ -1,0 +1,20 @@
+{
+    "name": "project-nvk",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "docker-compose -f docker/docker-compose.yml up",
+        "build": "docker-compose -f docker/docker-compose.yml build",
+        "deploy": "./scripts/deploy-azure.sh"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "multer": "^1.4.2",
+        "react-progress-bar": "^0.1.0"
+    },
+    "description": "This project is a contract analysis tool that uses local OCR, Gemini API, and RAG for text extraction and analysis.",
+    "main": "index.js",
+    "author": "",
+    "license": "ISC"
+}

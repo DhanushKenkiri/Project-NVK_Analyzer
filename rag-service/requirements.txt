@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sentence-transformers
+faiss-cpu
+transformers
+pathway
