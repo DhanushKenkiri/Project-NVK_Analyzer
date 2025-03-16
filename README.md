@@ -1,6 +1,14 @@
 # Project NVK Analyzer
 
-This project is a contract analysis tool that uses local OCR, Gemini API, and RAG for text extraction and analysis.
+This project is a contract analysis tool that uses local OCR, Gemini API, and RAG for text extraction and analysis. It includes real-time data ingestion and indexing using Pathway, hybrid retrieval (BM25 + semantic search), and a well-structured RAG pipeline.
+
+## Features
+- Real-time data ingestion and indexing using Pathway
+- Hybrid retrieval (BM25 + semantic search)
+- Well-structured RAG pipeline
+- REST API with Dockerized setup
+- Simple UI for user interactions and real-time data visualization
+- Optional agentic integration (LangGraph, Crew AI)
 
 ## Setup
 
