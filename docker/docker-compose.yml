@@ -10,7 +10,12 @@ services:
     depends_on:
       - server
     environment:
-      - REACT_APP_API_URL=http://server:3000
+      - REACT_APP_API_URL=http://localhost:3001
+    networks:
+      - nvk-network
+    volumes:
+      - ../client:/app
+      - /app/node_modules
 
   server:
     build:
@@ -22,9 +27,38 @@ services:
       - rag-service
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - RAG_SERVICE_URL=http://rag-service:5000
+      - NODE_ENV=development
+    networks:
+      - nvk-network
+    volumes:
+      - ../server:/app
+      - /app/node_modules
 
   rag-service:
     build:
       context: ../rag-service
     ports:
       - "5000:5000"
+    environment:
+      - PATHWAY_REALTIME_ENABLED=true
+      - PATHWAY_MAX_CONCURRENT_TASKS=4
+      - LOG_LEVEL=INFO
+    networks:
+      - nvk-network
+    volumes:
+      - ../rag-service:/app
+      - pathway-index-data:/app/data
+
+  tesseract:
+    image: tesseractshadow/tesseract4re
+    networks:
+      - nvk-network
+
+networks:
+  nvk-network:
+    driver: bridge
+
+volumes:
+  pathway-index-data:
+    driver: local
