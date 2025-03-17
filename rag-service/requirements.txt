@@ -4,3 +4,5 @@ sentence-transformers
 faiss-cpu
 transformers
 pathway
+langraph
+restapi

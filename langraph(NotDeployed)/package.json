@@ -1,0 +1,22 @@
+{
+  "name": "my-langraph-project",
+  "version": "1.0.0",
+  "description": "A project that integrates langraph for graph management.",
+  "main": "src/app.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "langraph": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/my-langraph-project.git"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
