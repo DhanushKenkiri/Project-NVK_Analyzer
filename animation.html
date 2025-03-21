@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Animated Process Flow</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+            /* Smooth transition for night mode */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            /* Slightly smaller container */
+            margin: 20px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            /* Smooth transition for night mode */
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            /* Darker heading color */
+        }
+        
+        .process-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .step {
+            position: relative;
+            width: 80%;
+            /* Wider step */
+            max-width: 400px;
+            padding: 25px;
+            margin: 20px 0;
+            background-color: #ffffff;
+            /* Lighter background */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+            /* Smooth transition for night mode */
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeIn 0.8s forwards;
+            animation-delay: calc(var(--step-delay) * 0.4s);
+            /* Slightly faster animation */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            /* Subtle shadow */
+        }
+        
+        .step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            /* Stronger hover effect */
+        }
+        
+        .step h2 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: #333;
+        }
+        
+        .step p {
+            color: #555;
+            /* Darker paragraph color */
+        }
+        
+        .arrow {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #4285f4;
+            /* Google Blue */
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInArrow 0.5s forwards;
+            animation-delay: calc(var(--step-delay) * 0.4s + 0.6s);
+            /* Adjusted delay */
+            transition: border-top-color 0.3s;
+            /* Smooth transition for night mode */
+        }
+        
+        .arrow:after {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #fff;
+            transition: border-top-color 0.3s;
+            /* Smooth transition for night mode */
+        }
+        
+        .icon {
+            font-size: 2.5em;
+            color: #4285f4;
+            /* Google Blue */
+            margin-bottom: 15px;
+        }
+        /* RAG Section Visuals */
+        
+        .rag-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            margin: 30px auto;
+            padding: 25px;
+            border: 2px dashed #999;
+            /* Darker dashed border */
+            border-radius: 12px;
+            transition: border-color 0.3s;
+            /* Smooth transition for night mode */
+        }
+        
+        .rag-component {
+            background-color: #e8f0fe;
+            /* Very Light Blue */
+            border: 1px solid #abc8e2;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 8px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            /* Smooth transition for night mode */
+            color: #444;
+        }
+        /* Night Mode Styles */
+        
+        body.night-mode {
+            background-color: #222;
+            color: #eee;
+        }
+        
+        .night-mode h1,
+        .night-mode h2,
+        .night-mode p {
+            color: #eee;
+            /* Light text for night mode */
+        }
+        
+        .night-mode .container {
+            background-color: #333;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+        
+        .night-mode .step {
+            background-color: #444;
+            border: 1px solid #555;
+        }
+        
+        .night-mode .arrow {
+            border-top-color: #bbb;
+        }
+        
+        .night-mode .arrow::after {
+            border-top-color: #333;
+        }
+        
+        .night-mode .rag-section {
+            border-color: #666;
+        }
+        
+        .night-mode .rag-component {
+            background-color: #455a64;
+            border-color: #546e7a;
+            color: #eee;
+        }
+        /* Animations */
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInArrow {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Utilities */
+        
+        .mt-3 {
+            margin-top: 1.5rem;
+            /* Increased margin */
+        }
+        /* Button for Night Mode */
+        
+        .night-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4285f4;
+            /* Google Blue */
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            /* More rounded button */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .night-mode-toggle:hover {
+            background-color: #3367d6;
+            /* Darker shade on hover */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+        /* Features & Sequence Diagram Styling */
+        
+        .mt-3 h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .mt-3 ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        
+        .mt-3 li {
+            color: #555;
+            margin-bottom: 5px;
+        }
+        /* Night Mode Updates for Lists and Headings */
+        
+        .night-mode .mt-3 h3,
+        .night-mode .mt-3 li {
+            color: #eee;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+</head>
+
+<body>
+
+    <button class="night-mode-toggle" onclick="toggleNightMode()">Toggle Night Mode</button>
+
+    <div class="container">
+        <h1>Automated Legal Workflow</h1>
+        <div class="process-flow">
+
+            <div class="step" style="--step-delay: 0;">
+                <i class="fas fa-sign-in-alt icon"></i>
+                <h2>User Login (Gmail)</h2>
+                <p>Secure authentication via Google OAuth.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 1;"></div>
+
+            <div class="step" style="--step-delay: 2;">
+                <i class="fas fa-comment-dots icon"></i>
+                <h2>Chatbot Interaction</h2>
+                <p>Engage with a chatbot for preliminary assistance.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 3;"></div>
+
+            <div class="step" style="--step-delay: 4;">
+                <i class="fas fa-file-alt icon"></i>
+                <h2>Legal Query Input</h2>
+                <p>Submit a legal question to the document generator.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 5;"></div>
+
+            <div class="step" style="--step-delay: 6;">
+                <i class="fas fa-file-pdf icon"></i>
+                <h2>Document Generation</h2>
+                <p>A legal document is dynamically generated based on your query.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 7;"></div>
+
+            <div class="step" style="--step-delay: 8;">
+                <i class="fas fa-envelope icon"></i>
+                <h2>Email Delivery Option</h2>
+                <p>Choose to send the generated document directly to your email.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 9;"></div>
+
+            <div class="step" style="--step-delay: 10;">
+                <i class="fas fa-cogs icon"></i>
+                <h2>RAG Processing</h2>
+                <p>Leveraging Retrieval Augmented Generation for enhanced content.</p>
+            </div>
+            <div class="arrow" style="--step-delay: 11;"></div>
+        </div>
+
+        <div class="rag-section">
+            <h2>RAG Process Breakdown</h2>
+            <div class="rag-component">User Query</div>
+            <div class="rag-component">Document Retrieval</div>
+            <div class="rag-component">Content Augmentation</div>
+            <div class="rag-component">Response Generation</div>
+            <div class="rag-component">Final Result</div>
+        </div>
+
+        <div class="process-flow">
+            <div class="step" style="--step-delay: 12;">
+                <i class="fas fa-check-circle icon"></i>
+                <h2>Generated Result</h2>
+                <p>Final output from the RAG process.</p>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <h3>Key Features:</h3>
+            <ul>
+                <li><i class="fas fa-moon"></i> Night Mode: Optimized for low-light viewing.</li>
+                <li><i class="fas fa-bell"></i> Notifications: Real-time updates for important events.</li>
+                <li><i class="fas fa-envelope"></i> Gmail Integration: Seamless email delivery options.</li>
+            </ul>
+        </div>
+
+        <h3>Sequence Diagram Explanation:</h3>
+        <p>This animation illustrates the interaction between the user, client, server, and RAG service. The RAG (Retrieval-Augmented Generation) enhances the document generation by retrieving relevant information.</p>
+        <ul>
+            <li><b>User:</b> Submits a query or uploads a document.</li>
+            <li><b>Client:</b> Sends an API request to the server.</li>
+            <li><b>Server:</b> Passes the request to the RAG service.</li>
+            <li><b>RAGService:</b> Executes the RAG pipeline, retrieves information, augments the content, generates a response, and returns the result.</li>
+        </ul>
+
+    </div>
+
+    <script>
+        const nightModeToggle = document.getElementById('nightModeToggle');
+
+        nightModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('night-mode');
+        });
+    </script>
+
+</body>
+
+</html>
